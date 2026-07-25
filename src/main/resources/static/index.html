@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人事务管理系统 - 登录</title>
+    <link rel="stylesheet" href="/assets/css/auth.css">
+</head>
+<body>
+<div class="bg-shape shape-a"></div>
+<div class="bg-shape shape-b"></div>
+<div class="bg-shape shape-c"></div>
+
+<main id="authApp" class="auth-layout" v-cloak>
+    <section class="brand-panel">
+        <p class="tag">个人事务管家</p>
+        <h1>把记账、规划、目标放进一个后台</h1>
+        <p class="desc">用清晰的数据和可执行的计划管理每天。支持 JWT 登录、多用户数据隔离、MySQL 存储。</p>
+
+        <div class="feature-grid">
+            <article>
+                <h3>记账</h3>
+                <p>收入支出、分类、时间维度查看</p>
+            </article>
+            <article>
+                <h3>规划</h3>
+                <p>任务优先级、状态跟踪、进度推进</p>
+            </article>
+            <article>
+                <h3>目标</h3>
+                <p>目标金额、达成比例、截止时间</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="card-wrap">
+        <p class="status-text" :class="{ error: messageType === 'error', success: messageType === 'success' }">{{ message }}</p>
+        <div class="tabs">
+            <button type="button" class="tab" :class="{ active: activeTab === 'login' }" @click="switchTab('login')">登录</button>
+            <button type="button" class="tab" :class="{ active: activeTab === 'register' }" @click="switchTab('register')">注册</button>
+        </div>
+
+        <article class="auth-card" :class="{ active: activeTab === 'login' }">
+            <h2>账号登录</h2>
+            <p class="sub">登录后访问你的专属数据看板。</p>
+            <form @submit.prevent="onLogin">
+                <label>
+                    用户名
+                    <input v-model.trim="loginForm.username" type="text" placeholder="请输入用户名" required>
+                </label>
+                <label>
+                    密码
+                    <input v-model="loginForm.password" type="password" placeholder="请输入密码" required>
+                </label>
+
+                <label class="remember-row">
+                    <input v-model="loginForm.remember" type="checkbox">
+                    <span>记住我</span>
+                </label>
+
+                <button type="submit">{{ loginSubmitting ? '登录中...' : '登录' }}</button>
+            </form>
+        </article>
+
+        <article class="auth-card" :class="{ active: activeTab === 'register' }">
+            <h2>创建账号</h2>
+            <form @submit.prevent="onRegister">
+                <label>
+                    用户名
+                    <input v-model.trim="registerForm.username" type="text" placeholder="4-50位" required>
+                </label>
+                <label>
+                    密码
+                    <input v-model="registerForm.password" type="password" placeholder="6-50位" required>
+                </label>
+                <label>
+                    确认密码
+                    <input v-model="registerForm.confirmPassword" type="password" placeholder="请再次输入密码" required>
+                </label>
+                <button type="submit">{{ registerSubmitting ? '注册中...' : '注册' }}</button>
+            </form>
+        </article>
+    </section>
+</main>
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script src="/assets/js/feature-flags.js"></script>
+<script src="/assets/js/api.js"></script>
+<script src="/assets/js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+-- MySQL 5.5 兼容修复脚本（一次性执行）
+-- 目标：将所有涉及 LocalDateTime 的字段统一为 DATETIME（不带小数精度）
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+ALTER TABLE sys_user
+  MODIFY COLUMN created_at DATETIME NOT NULL;
+
+ALTER TABLE accounting_record
+  MODIFY COLUMN account_date DATETIME NOT NULL,
+  MODIFY COLUMN created_at DATETIME NOT NULL,
+  MODIFY COLUMN updated_at DATETIME NOT NULL;
+
+ALTER TABLE plan_item
+  MODIFY COLUMN created_at DATETIME NOT NULL,
+  MODIFY COLUMN updated_at DATETIME NOT NULL;
+
+ALTER TABLE goal
+  MODIFY COLUMN created_at DATETIME NOT NULL,
+  MODIFY COLUMN updated_at DATETIME NOT NULL;
+
+SET FOREIGN_KEY_CHECKS = 1;
